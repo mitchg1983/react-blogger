@@ -4,56 +4,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-
-class Blogpost extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <div className="blogpost-panel">
-        <Row>
-          <Col>
-            <div> {this.props.subject} </div>
-            <div> by {this.props.authorName} </div>
-            <div> {this.props.timeOfPost} </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div> {this.props.content} </div>
-            <div> cID {this.props.cID} </div>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
-
-const fetchBlogs = async () => {
-  //Get and return all products from API
-  // const requestOptions = {
-  //   method: "GET"
-  // }
-  // const fetchResponse = await fetch(`${fakeStoreAPIURL}/products`, requestOptions)
-
-  const fetchResponse = await fetch(
-    "https://6239ddb128bcd99f02763cfe.mockapi.io/blogs"
-  );
-  console.log("fetch response ", fetchResponse);
-  const jsonData = await fetchResponse.json();
-  console.log("fetched jsonData ", jsonData);
-  return jsonData;
-};
-
-// fetchBlogs();
+import BootstrapTable from "react-bootstrap-table-next";
+import { Blogpost, Pagination } from "./components"
 
 export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: "",
-      fetchedBlogs: [],
+      fetchedBlogs: [
+        {
+          author: "",
+          createdAt: "",
+          id: "",
+          text: "",
+          title: "",
+        }
+      ],
       authorList: [],
     };
   }
@@ -65,13 +32,9 @@ export class App extends Component {
     console.log("fetch response ", fetchResponse);
     const jsonData = await fetchResponse.json();
     console.log("fetched jsonData ", jsonData);
-
-    const authorList = await jsonData.map( (fetchedPost) => {
+    const authorList = await jsonData.map((fetchedPost) => {
       return fetchedPost.author;
-    }
-    )
-
-
+    });
     this.setState({
       fetchedBlogs: jsonData,
       authorList: authorList,
@@ -82,7 +45,6 @@ export class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <header className="App-header"> */}
         <div className="navbar">
           {" "}
           <Row>
@@ -94,7 +56,11 @@ export class App extends Component {
         </div>
         <div className="display-area">
           <div className="main-panel">
-            {this.state.fetchedBlogs.map((blog, idx) => {
+
+      <Pagination allBlogPosts={this.state.fetchedBlogs} />
+
+
+            {/* {this.state.fetchedBlogs.map((blog, idx) => {
               return (
                 <div>
                   <Blogpost
@@ -107,12 +73,14 @@ export class App extends Component {
                   />
                 </div>
               );
-            })}
+            })} */}
+
+
           </div>
+
 
           <div className="options-panel">Options Panels</div>
         </div>
-        {/* </header> */}
       </div>
     );
   }

@@ -1,11 +1,12 @@
 import "./App.css";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import BootstrapTable from "react-bootstrap-table-next";
-import { Blogpost, Pagination } from "./components"
+import { Blogpost, Pagination } from "./components";
 
 export class App extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export class App extends Component {
           id: "",
           text: "",
           title: "",
-        }
+        },
       ],
       authorList: [],
     };
@@ -45,41 +46,11 @@ export class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="navbar">
-          {" "}
-          <Row>
-            <Col>
-              {" "}
-              <Button onClick={this.handleLoadClick}>Click here</Button>
-            </Col>
-          </Row>
-        </div>
-        <div className="display-area">
-          <div className="main-panel">
-
-      <Pagination allBlogPosts={this.state.fetchedBlogs} />
-
-
-            {/* {this.state.fetchedBlogs.map((blog, idx) => {
-              return (
-                <div>
-                  <Blogpost
-                    key={`Product-${idx}`}
-                    authorName={blog.author}
-                    timeOfPost={blog.createdAt}
-                    cID={blog.id}
-                    content={blog.text}
-                    subject={blog.title}
-                  />
-                </div>
-              );
-            })} */}
-
-
-          </div>
-
-
-          <div className="options-panel">Options Panels</div>
+        <Button variant="primary" onClick={this.handleLoadClick}>
+          Click here
+        </Button>
+        <div className="main-panel">
+          <Pagination allBlogPosts={this.state.fetchedBlogs} />
         </div>
       </div>
     );

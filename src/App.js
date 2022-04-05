@@ -4,9 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import BootstrapTable from "react-bootstrap-table-next";
-import { Blogpost, Pagination } from "./components";
+import { Blogpost, Pagination, DisplayBlogText } from "./components";
 
 export class App extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export class App extends Component {
         },
       ],
       authorList: [],
+      selectedText: "",
     };
   }
 
@@ -43,14 +45,42 @@ export class App extends Component {
     // return jsonData;
   };
 
+  handleTableClick = (e) => {
+    //this will grab the row clicked
+    console.log(e.target.parentNode);
+
+  };
+
   render() {
     return (
       <div className="App">
         <Button variant="primary" onClick={this.handleLoadClick}>
           Click here
         </Button>
+        <div className="read-panel">
+          {/* <DisplayBlogText /> */}
+
+        </div>
         <div className="main-panel">
+
+        <div>
+        <h3>Blogpost Results</h3>
+        <Table striped bordered hover onClick={this.handleTableClick}>
+          <thead>
+            <tr>
+              <th>id#</th>
+              <th>Author</th>
+              <th>Text</th>
+              <th>Title</th>
+            </tr>
+          </thead>
+
           <Pagination allBlogPosts={this.state.fetchedBlogs} />
+
+          </Table>
+      </div>
+
+
         </div>
       </div>
     );
